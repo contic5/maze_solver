@@ -1,0 +1,39 @@
+def dfs(x,y,k):
+    global totalchecks
+    global goal
+    global grid
+    global pathfound
+    global distances
+    distances[x][y]=k
+    totalchecks+=1
+    if(x==goal[0] and y==goal[1]):
+        print('Goal reached')
+        pathfound=True
+        pass
+    for i in range(len(moves)):
+        newx=x+moves[i][0]
+        newy=y+moves[i][1]
+        if(validposition(newx,newy)):
+            if(distances[newx][newy]==0 and grid[newx][newy]==0):
+                print('pos=','(',newx,',',newy,')',' val=',distances[newx][newy],' k=',k,sep='')
+                dfs(newx,newy,k+1)
+    pass
+def bfs(x,y):
+    global totalchecks
+    k=1
+    distances[x][y]=1
+    while(distances[goal[0]][goal[1]])==0 and k<len(grid)**2:
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if(distances[i][j]==k):
+                    totalchecks+=1
+                    x=i
+                    y=j
+                    for m in range(len(moves)):
+                        newx=x+moves[m][0]
+                        newy=y+moves[m][1]
+                        if(validposition(newx,newy)):
+                            if(distances[newx][newy]==0 and grid[newx][newy]==0):
+                                distances[newx][newy]=k+1
+        print(k) 
+        k+=1
